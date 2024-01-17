@@ -28,7 +28,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>Class Name</label>
-                                        <select class="form-control" name="class_id" required>
+                                        <select class="form-control" name="class_id">
                                             <option value="">Select Class</option>
                                             @foreach ($getClass as $class)
                                                 <option {{ $getRecord->class_id == $class->id ? 'selected' : '' }} value="{{ $class->id }}">{{ $class->name }}</option>

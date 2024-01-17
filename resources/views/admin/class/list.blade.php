@@ -35,12 +35,12 @@
                                         <div class="form-group col-md-3">
                                             <label for="">Name</label>
                                             <input type="text" name="name" class="form-control"
-                                                value="{{ Request::get('name') }}" placeholder="Enter name">
+                                                value="{{ Request::get('name') }}" placeholder="Enter Name">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="">Date</label>
                                             <input type="date" name="date" class="form-control"
-                                                value="{{ Request::get('date') }}" placeholder="Enter date">
+                                                value="{{ Request::get('date') }}" placeholder="Enter Date">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <button type="submit" class="btn text-white"

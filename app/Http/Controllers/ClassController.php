@@ -27,7 +27,7 @@ class ClassController extends Controller
         $class->created_by = Auth::user()->id;
         $class->save();
 
-        return redirect('admin/class/list')->with('success', 'Subject added successfully.');
+        return redirect('admin/class/list')->with('success', 'Class added successfully.');
     }
 
     public function edit($id){

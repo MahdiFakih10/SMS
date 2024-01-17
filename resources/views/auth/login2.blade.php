@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Page</title>
     <link rel="stylesheet" href="{{asset('styles/login-style.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   
@@ -56,6 +57,9 @@
                 {{-- @error('password')
                     <p>{{$message}}</p>
                 @enderror --}}
+                <button type="button" id="togglePassword" onclick="togglePasswordVisibility()">
+                  <i class="fas fa-eye"></i>
+                </button>
               </div>
 
               <div>
@@ -75,6 +79,21 @@
         </div>
     </div>
 </body>
+
+<script>
+  function togglePasswordVisibility() {
+      var passwordInput = document.getElementById("password");
+      var toggleButton = document.getElementById("togglePassword");
+
+      if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i>'; // Eye-slash icon when showing password
+      } else {
+          passwordInput.type = "password";
+          toggleButton.innerHTML = '<i class="fas fa-eye"></i>'; // Eye icon when hiding password
+      }
+  }
+</script>
 </html>
 
 

@@ -9,6 +9,11 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ClassSubjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\AssignClassTeacherController;
+use App\Http\Controllers\ClassTimeTableController;
+use App\Http\Controllers\AttendanceController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,10 +43,21 @@ Route::group(['middleware' => 'admin'], function(){
     Route::post('admin/admin/edit/{id}', [AdminController::class, 'update']);
     Route::get('admin/admin/delete/{id}', [AdminController::class, 'delete']);
 
+    //teacher
+    Route::get('admin/teacher/list', [TeacherController::class, 'list']);
+    Route::get('admin/teacher/add', [TeacherController::class, 'add']);
+    Route::post('admin/teacher/add', [TeacherController::class, 'insert']);
+    Route::get('admin/teacher/edit/{id}', [TeacherController::class, 'edit']);
+    Route::post('admin/teacher/edit/{id}', [TeacherController::class, 'update']);
+    Route::get('admin/teacher/delete/{id}', [TeacherController::class, 'delete']);
+
     //student
     Route::get('admin/student/list', [StudentController::class, 'list']);
     Route::get('admin/student/add', [StudentController::class, 'add']);
     Route::post('admin/student/add', [StudentController::class, 'insert']);
+    Route::get('admin/student/edit/{id}', [StudentController::class, 'edit']);
+    Route::post('admin/student/edit/{id}', [StudentController::class, 'update']);
+    Route::get('admin/student/delete/{id}', [StudentController::class, 'delete']);
 
     //class url
     Route::get('admin/class/list', [ClassController::class, 'list']);
@@ -69,21 +85,73 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('admin/assign_subject/edit_single/{id}', [ClassSubjectController::class, 'edit_single']);
     Route::post('admin/assign_subject/edit_single/{id}', [ClassSubjectController::class, 'update_single']);
 
+    //Assign class teacher
+    Route::get('admin/assign_class_teacher/list', [AssignClassTeacherController::class, 'list']);
+    Route::get('admin/assign_class_teacher/add', [AssignClassTeacherController::class, 'add']);
+    Route::post('admin/assign_class_teacher/add', [AssignClassTeacherController::class, 'insert']);
+    Route::get('admin/assign_class_teacher/edit/{id}', [AssignClassTeacherController::class, 'edit']);
+    Route::post('admin/assign_class_teacher/edit/{id}', [AssignClassTeacherController::class, 'update']);
+    Route::get('admin/assign_class_teacher/delete/{id}', [AssignClassTeacherController::class, 'delete']);
+
+
+    //Class TimeTable
+    Route::get('admin/class_timetable/list', [ClassTimeTableController::class, 'list']);
+    Route::post('admin/class_timetable/get_subject', [ClassTimeTableController::class, 'get_subject']);
+    Route::post('admin/class_timetable/add', [ClassTimeTableController::class, 'insert_update']);
+
+    //Attendance
+    Route::get('admin/attendance/student', [AttendanceController::class, 'AttendanceStudent']);
+    Route::post('admin/attendance/student/save', [AttendanceController::class, 'AttendanceStudentSubmit']);
+    Route::get('admin/attendance/report', [AttendanceController::class, 'AttendanceReport']);
+
+    //My Account
+    Route::get('admin/account', [UserController::class, 'myAccount']);
+    Route::post('admin/account', [UserController::class, 'updateMyAccountAdmin']);
+
     //Change Password
     Route::get('admin/change_password', [UserController::Class, 'change_password']);
     Route::post('admin/change_password', [UserController::Class, 'update_change_password']);
 });
 
-Route::group(['middleware' => 'teacher'], function(){
-    Route::get('teacher/dashboard', [DashboardController::class, 'dashboard']);
+    Route::group(['middleware' => 'teacher'], function(){
+        Route::get('teacher/dashboard', [DashboardController::class, 'dashboard']);
+        
+        //My Class
+        Route::get('teacher/my_class', [AssignClassTeacherController::class, 'MyClass']);
+        Route::get('teacher/my_class/class_timetable/{class_id}/{subject_id}', [ClassTimetableController::class, 'MyTimetableTeacher']);
 
-    //Change Password
-    Route::get('teacher/change_password', [UserController::Class, 'change_password']);
-    Route::post('teacher/change_password', [UserController::Class, 'update_change_password']);
+        //My students
+        Route::get('teacher/my_student', [StudentController::class, 'MyStudent']);
+        
+        //Student TeacherSide Attendance
+        Route::get('teacher/attendance/student', [AttendanceController::class, 'AttendanceStudentTeacher']);
+        Route::post('teacher/attendance/student/save', [AttendanceController::class, 'AttendanceStudentSubmit']);
+        Route::get('teacher/attendance/report', [AttendanceController::class, 'AttendanceReportTeacher']);
+
+        //My Account
+        Route::get('teacher/account', [UserController::class, 'myAccount']);
+        Route::post('teacher/account', [UserController::class, 'updateMyAccount']);
+
+        //Change Password
+        Route::get('teacher/change_password', [UserController::Class, 'change_password']);
+        Route::post('teacher/change_password', [UserController::Class, 'update_change_password']);
 });
 
 Route::group(['middleware' => 'student'], function(){
     Route::get('student/dashboard', [DashboardController::class, 'dashboard']);
+
+    //My Subject
+    Route::get('student/my_subject', [SubjectController::class, 'MySubject']);
+
+    //My Timetable
+    Route::get('student/my_timetable', [ClassTimetableController::class, 'MyTimetable']);
+
+    //My Attendance
+    Route::get('student/my_attendance', [AttendanceController::class, 'MyAttendance']);
+
+    //My Account
+    Route::get('student/account', [UserController::class, 'myAccount']);
+    Route::post('student/account', [UserController::class, 'updateMyAccountStudent']);
 
     //Change Password
     Route::get('student/change_password', [UserController::Class, 'change_password']);

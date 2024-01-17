@@ -23,7 +23,7 @@ class ClassModel extends Model
 
                     if(!empty(Request::get('date')))
                     {
-                        $return = $return->where('class.created_at', '=', Request::get('date'));
+                        $return = $return->whereDate('class.created_at', '=', Request::get('date'));
                     }
 
                     $return = $return->where('class.is_deleted', '=', 0)
@@ -45,6 +45,14 @@ class ClassModel extends Model
         ->get();
 
         return $return;
+    }
+
+    static public function getTotalClass(){
+        return ClassModel::select('class.*')
+        ->where('class.is_deleted', '=', '0')
+        ->where('class.status', '=', '1')
+        ->count();
+
     }
 
 }

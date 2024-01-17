@@ -26,7 +26,7 @@ class SubjectModel extends Model
                     }
 
                     if(!empty(Request::get('date'))){
-                        $return = $return->where('subject.created_at', '=', Request::get('date'));
+                        $return = $return->whereDate('subject.created_at', '=', Request::get('date'));
                     }
 
                     $return = $return->where('subject.is_deleted', '=', '0')
@@ -48,6 +48,13 @@ class SubjectModel extends Model
         ->get();
 
         return $return;
+    }
+
+    static public function getTotalSubject(){
+        return SubjectModel::select('subject.*')
+        ->where('subject.is_deleted', '=', '0')
+        ->where('subject.status', '=', '0')
+        ->count();
     }
 
 

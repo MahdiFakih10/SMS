@@ -38,7 +38,7 @@
 
                                     <div class="form-group">
                                         <label>Subject Name</label>
-                                        <select class="form-control" name="subject_id" required>
+                                        <select class="form-control" name="subject_id">
                                             <option value="">Select Subject</option>
                                             @foreach ($getSubject as $subject)
                                                 <option {{ $getRecord->subject_id == $subject->id ? 'selected' : '' }} value="{{ $subject->id }}">{{ $subject->name }}</option>

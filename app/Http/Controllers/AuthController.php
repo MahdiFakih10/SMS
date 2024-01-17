@@ -44,7 +44,6 @@ class AuthController extends Controller
             else if(Auth::user() -> user_type == 3){
                 return redirect('student/dashboard');
             }
-
         }
         else{
             return redirect()->back()->with('error', 'Please enter current email and password');

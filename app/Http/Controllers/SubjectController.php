@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SubjectModel;
+use App\Models\ClassSubjectModel;
 use Illuminate\Support\Facades\Auth;
 
 class SubjectController extends Controller
@@ -28,7 +29,7 @@ class SubjectController extends Controller
         $subject->created_by = Auth::user()->id;
         $subject->save();
 
-        return redirect('admin/subject/list')->with('success', 'Class added successfully.');
+        return redirect('admin/subject/list')->with('success', 'Subject added successfully.');
     }
 
     public function edit($id){
@@ -58,5 +59,11 @@ class SubjectController extends Controller
         $subject->save();
 
         return redirect('admin/subject/list')->with('success', 'Subject deleted successfully.');
+    }
+
+    public function MySubject(){
+        $data['getRecords'] = ClassSubjectModel::MySubject(Auth::user()->class_id); 
+        $data['header_title'] = 'My Subject';
+        return view('student.my_subject', $data);
     }
 }
